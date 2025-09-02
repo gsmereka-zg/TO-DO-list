@@ -19,6 +19,36 @@ public class TaskRepository {
         return tasks;
     }
 
+    public List<Task> getTasksByCategory(String category) {
+        List<Task> result = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.getCategory().equalsIgnoreCase(category)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+
+    public List<Task> getTasksByPriority(int priority) {
+        List<Task> result = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.getPriority() == priority) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+
+    public List<Task> getTasksByStatus(String status) {
+        List<Task> result = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.getStatus().equalsIgnoreCase(status)) {
+                result.add(t);
+            }
+        }
+        return result;
+    }
+
     // Delete
     public void deleteTask(int index) {
         if (index >= 0 && index < tasks.size()) {
