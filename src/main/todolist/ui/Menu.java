@@ -20,8 +20,11 @@ public class Menu {
         while (option != 0) {
             System.out.println("\n===== TODO List Menu =====");
             System.out.println("1 - Add Task");
-            System.out.println("2 - List Tasks");
+            System.out.println("2 - List All Tasks");
             System.out.println("3 - Delete Task");
+            System.out.println("4 - List by Category");
+            System.out.println("5 - List by Priority");
+            System.out.println("6 - List by Status");
             System.out.println("0 - Exit");
             System.out.print("Choose an option: ");
             option = scanner.nextInt();
@@ -36,6 +39,15 @@ public class Menu {
                     break;
                 case 3:
                     deleteTask();
+                    break;
+                case 4:
+                    listByCategory();
+                    break;
+                case 5:
+                    listByPriority();
+                    break;
+                case 6:
+                    listByStatus();
                     break;
                 case 0:
                     System.out.println("Exiting...");
@@ -84,5 +96,37 @@ public class Menu {
         scanner.nextLine(); // skip newline
         repo.deleteTask(index);
         System.out.println("Task deleted (if index was valid).");
+    }
+
+    private void listByCategory() {
+        System.out.print("Enter category: ");
+        String category = scanner.nextLine();
+        List<Task> tasks = repo.getTasksByCategory(category);
+        printTasks(tasks);
+    }
+
+    private void listByPriority() {
+        System.out.print("Enter priority (1-5): ");
+        int priority = scanner.nextInt();
+        scanner.nextLine(); // skip newline
+        List<Task> tasks = repo.getTasksByPriority(priority);
+        printTasks(tasks);
+    }
+
+    private void listByStatus() {
+        System.out.print("Enter status (TODO, DOING, DONE): ");
+        String status = scanner.nextLine();
+        List<Task> tasks = repo.getTasksByStatus(status);
+        printTasks(tasks);
+    }
+
+    private void printTasks(List<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks found.");
+        } else {
+            for (Task t : tasks) {
+                System.out.println(t);
+            }
+        }
     }
 }
