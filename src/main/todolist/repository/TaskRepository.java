@@ -12,12 +12,6 @@ public class TaskRepository {
         tasks = new ArrayList<>();
     }
 
-    // Create
-    public void addTask(Task task) {
-        tasks.add(task);
-    }
-
-    // Read
     public void addTask(Task newTask) {
         if (tasks.isEmpty()) {
             tasks.add(newTask);
@@ -31,7 +25,7 @@ public class TaskRepository {
         tasks.add(i, newTask);
     }
 
-
+    // Read
     public List<Task> getTasksByCategory(String category) {
         List<Task> result = new ArrayList<>();
         for (Task t : tasks) {
