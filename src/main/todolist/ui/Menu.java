@@ -1,0 +1,88 @@
+package todolist.ui;
+
+import todolist.model.Task;
+import todolist.repository.TaskRepository;
+import java.util.List;
+import java.util.Scanner;
+
+public class Menu {
+
+    private TaskRepository repo;
+    private Scanner scanner;
+
+    public Menu(TaskRepository repo) {
+        this.repo = repo;
+        scanner = new Scanner(System.in);
+    }
+
+    public void show() {
+        int option = -1;
+        while (option != 0) {
+            System.out.println("\n===== TODO List Menu =====");
+            System.out.println("1 - Add Task");
+            System.out.println("2 - List Tasks");
+            System.out.println("3 - Delete Task");
+            System.out.println("0 - Exit");
+            System.out.print("Choose an option: ");
+            option = scanner.nextInt();
+            scanner.nextLine(); // skip newline
+
+            switch (option) {
+                case 1:
+                    addTask();
+                    break;
+                case 2:
+                    listTasks();
+                    break;
+                case 3:
+                    deleteTask();
+                    break;
+                case 0:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
+        }
+    }
+
+    private void addTask() {
+        System.out.print("Name: ");
+        String name = scanner.nextLine();
+        System.out.print("Description: ");
+        String description = scanner.nextLine();
+        System.out.print("Due Date (YYYY-MM-DD): ");
+        String dueDate = scanner.nextLine();
+        System.out.print("Priority (1-5): ");
+        int priority = scanner.nextInt();
+        scanner.nextLine(); // skip newline
+        System.out.print("Category: ");
+        String category = scanner.nextLine();
+        System.out.print("Status (TODO, DOING, DONE): ");
+        String status = scanner.nextLine();
+
+        Task task = new Task(name, description, dueDate, priority, category, status);
+        repo.addTask(task);
+        System.out.println("Task added successfully!");
+    }
+
+    private void listTasks() {
+        List<Task> tasks = repo.getAllTasks();
+        if (tasks.isEmpty()) {
+            System.out.println("No tasks found.");
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(i + " - " + tasks.get(i));
+            }
+        }
+    }
+
+    private void deleteTask() {
+        listTasks();
+        System.out.print("Enter the index of the task to delete: ");
+        int index = scanner.nextInt();
+        scanner.nextLine(); // skip newline
+        repo.deleteTask(index);
+        System.out.println("Task deleted (if index was valid).");
+    }
+}
