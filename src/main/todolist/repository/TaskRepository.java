@@ -12,6 +12,7 @@ public class TaskRepository {
         tasks = new ArrayList<>();
     }
 
+    // Create
     public void addTask(Task newTask) {
         if (tasks.isEmpty()) {
             tasks.add(newTask);
@@ -26,6 +27,10 @@ public class TaskRepository {
     }
 
     // Read
+    public List<Task> getAllTasks() {
+        return tasks;
+    }
+
     public List<Task> getTasksByCategory(String category) {
         List<Task> result = new ArrayList<>();
         for (Task t : tasks) {
